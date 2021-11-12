@@ -179,11 +179,3 @@ def interface():
         sys.exit("Exit")
 
 interface()
-
-#while 69:
-#    n = int(input("introduceti nr de willy uri"))
-#    print("waits 5")
-#    time.sleep(5)
-#    for i in range(0,n):
-#        willy(i)
-#    break
