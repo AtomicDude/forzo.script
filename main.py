@@ -129,13 +129,34 @@ def buy_cars():
         time.sleep(0.5)
         pressKey(Key.enter,0.5)
 
-    pressKey(Key.esc,0.5)
-    pressKey(Key.left,1)
+    pressKey(Key.esc, 1)
+    pressKey(Key.left, 1)
 
     easygui.textbox("Finished buying " + str(nr_cars) + " cars")
 
 def sell_cars():
-    nr_cars = input("How many cars do you want to sell?")
+    nr_cars = integerbox("How many cars do you want to buy?")
+    print("number of cars:" + str(nr_cars))
+    sell(nr_cars)
+
+def sell(nr_cars):
+    print("waits 5")
+    time.sleep(5)
+
+    pressKey(Key.enter, 0.6)
+    pressKey(Key.left, 0.1)
+    pressKey(Key.down, 0.1)
+
+    for j in range(0,nr_cars):
+        pressKey(Key.enter, 0.2)
+        for i in range(0, 4):
+            pressKey(Key.down, 0.1)
+        pressKey(Key.enter, 0.5)
+        pressKey(Key.enter, 0.5)
+
+    pressKey(Key.esc, 1)
+
+    easygui.textbox("Finished selling " + str(nr_cars) + " cars")
 
 def test_stop():
     STOP_EVERYTHING()
@@ -143,21 +164,26 @@ def test_stop():
         print("pula")
 
 def interface():
-    x = easygui.indexbox(msg="What do you want to do?",choices=["Launch Forza","Buy cars","Sell cars","Get SWS","Exit","PULA"],default_choice="Exit")
+    x = easygui.indexbox(msg="What do you want to do?",choices=["Launch Forza","Buy cars","Sell cars","Get SWS","Exit"],default_choice="Exit")
     if x == 0:
         start_forza()
         interface()
     elif x == 1:
         buy_cars()
     elif x == 2:
-        #sell_cars()
-        print(x)
+        sell_cars()
     elif x == 3:
         #start_willy()
         print(x)
     elif x == 4:
         sys.exit("Exit")
-    elif x == 5:
-        test_stop()
 
 interface()
+
+#while 69:
+#    n = int(input("introduceti nr de willy uri"))
+#    print("waits 5")
+#    time.sleep(5)
+#    for i in range(0,n):
+#        willy(i)
+#    break
