@@ -14,7 +14,7 @@ keyboard = Controller()
 
 
 def willy(n):
-    x = int(n/2) + 0.75
+    x = int(n/2) + 1
     print("x")
     forza()
     keyboard.press(Key.enter)
