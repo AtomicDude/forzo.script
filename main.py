@@ -4,6 +4,13 @@ import easygui
 from pynput.keyboard import Key, Controller
 from easygui import *
 
+MOVE_DElAY = 0.5
+MOVE_FAST_DELAY = 0.1
+ENTER_GARAGE_DELAY = 1
+ENTER_BUY_DELAY = 0.5
+ENTER_MENU_DELAY = 0.2
+ESC_DELAY = 1
+
 def process_exists(process_name):
     call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
     # use buildin check_output right away
@@ -80,33 +87,33 @@ def willy(car_nr):
     x = int(car_nr / 2) + 1
     print(f"Willy nr: {car_nr + 1}")
     # Enter car menu
-    pressKey(Key.enter, 0.75)
+    pressKey(Key.enter, ENTER_GARAGE_DELAY)
     # Go to the car
     while x > 0:
-        pressKey(Key.left, 0.2)
+        pressKey(Key.left, MOVE_FAST_DELAY)
         x -= 1
     # Select the car and w8 to load
-    pressKey(Key.enter, 0.75)
+    pressKey(Key.enter, ENTER_BUY_DELAY)
     pressKey(Key.enter, 7)
     # Go to 'Tune Car'
-    pressKey(Key.esc, 1)
-    pressKey(Key.left, 0.1)
-    pressKey(Key.enter, 0.75)
+    pressKey(Key.esc, ESC_DELAY)
+    pressKey(Key.left, MOVE_FAST_DELAY)
+    pressKey(Key.enter, ENTER_BUY_DELAY)
     # Go to 'Car mastery'
-    pressKey(Key.right, 0.1)
-    pressKey(Key.right, 0.1)
-    pressKey(Key.down, 0.5)
-    pressKey(Key.enter, 0.6)
+    pressKey(Key.right, MOVE_FAST_DELAY)
+    pressKey(Key.right, MOVE_FAST_DELAY)
+    pressKey(Key.down, MOVE_DElAY)
+    pressKey(Key.enter, ENTER_BUY_DELAY)
     # Choose perks
-    pressKey(Key.enter, 0.5)
-    pressKey(Key.right, 0.5)
-    pressKey(Key.enter, 0.6)
-    pressKey(Key.up, 0.5)
-    pressKey(Key.enter, 0.6)
+    pressKey(Key.enter, ENTER_BUY_DELAY)
+    pressKey(Key.right, MOVE_DElAY)
+    pressKey(Key.enter, ENTER_BUY_DELAY)
+    pressKey(Key.up, MOVE_DElAY)
+    pressKey(Key.enter, ENTER_BUY_DELAY)
     # Go to starting point
-    pressKey(Key.esc, 0.75)
-    pressKey(Key.esc, 1)
-    pressKey(Key.right, 0.75)
+    pressKey(Key.esc, ESC_DELAY)
+    pressKey(Key.esc, ESC_DELAY)
+    pressKey(Key.right, MOVE_FAST_DELAY)
 
 def STOP_EVERYTHING():
     stop = indexbox(msg="Do you want to stop the script?",choices=["YES"])
@@ -120,17 +127,17 @@ def buy_cars():
     print("waits 5")
     time.sleep(5)
 
-    pressKey(Key.right, 0.5)
-    pressKey(Key.enter, 1)
+    pressKey(Key.right, MOVE_DElAY)
+    pressKey(Key.enter, ENTER_GARAGE_DELAY)
 
     for i in range(0, nr_cars):
         keyboard.press("y")
         keyboard.release("y")
         time.sleep(0.5)
-        pressKey(Key.enter,0.5)
+        pressKey(Key.enter,ENTER_BUY_DELAY)
 
-    pressKey(Key.esc, 1)
-    pressKey(Key.left, 1)
+    pressKey(Key.esc, ESC_DELAY)
+    pressKey(Key.left, MOVE_DElAY)
 
     easygui.textbox("Finished buying " + str(nr_cars) + " cars")
 
@@ -143,25 +150,20 @@ def sell(nr_cars):
     print("waits 5")
     time.sleep(5)
 
-    pressKey(Key.enter, 0.6)
-    pressKey(Key.left, 0.1)
-    pressKey(Key.down, 0.1)
+    pressKey(Key.enter, ENTER_GARAGE_DELAY)
+    pressKey(Key.left, MOVE_FAST_DELAY)
+    pressKey(Key.down, MOVE_FAST_DELAY)
 
     for j in range(0,nr_cars):
-        pressKey(Key.enter, 0.2)
+        pressKey(Key.enter, ENTER_MENU_DELAY)
         for i in range(0, 4):
-            pressKey(Key.down, 0.1)
-        pressKey(Key.enter, 0.5)
-        pressKey(Key.enter, 0.5)
+            pressKey(Key.down, MOVE_FAST_DELAY)
+        pressKey(Key.enter, ENTER_BUY_DELAY)
+        pressKey(Key.enter, ENTER_BUY_DELAY)
 
-    pressKey(Key.esc, 1)
+    pressKey(Key.esc, ESC_DELAY)
 
     easygui.textbox("Finished selling " + str(nr_cars) + " cars")
-
-def test_stop():
-    STOP_EVERYTHING()
-    while 1:
-        print("pula")
 
 def interface():
     x = easygui.indexbox(msg="What do you want to do?",choices=["Launch Forza","Buy cars","Sell cars","Get SWS","Exit"],default_choice="Exit")
@@ -173,8 +175,7 @@ def interface():
     elif x == 2:
         sell_cars()
     elif x == 3:
-        #start_willy()
-        print(x)
+        start_willy()
     elif x == 4:
         sys.exit("Exit")
 
